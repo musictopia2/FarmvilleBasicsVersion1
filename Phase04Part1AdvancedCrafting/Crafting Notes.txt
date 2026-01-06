@@ -1,0 +1,17 @@
+﻿For crafting items, what will happen will be as follows:
+
+1.  Show the ingredients required for each of the items being crafted.
+
+2.  No need for progress bars (instead just show the time remaining).
+3.  show how long each take (if no minutes, then s) if minutes, then m and then s
+4.  for each tick, will just show the time remaining.
+5.  show how much of the item you have (for each of the items supported)
+6.  each also shows how many you have.
+
+example:  11/4
+means you have 11 but 4 are required.
+
+if you don't have enough, then maybe 0/2 but would be red (different color).
+
+
+details for each item crafting details (before deciding).  one is button.

@@ -1,0 +1,32 @@
+﻿<NavigationBarContainer
+    AlwaysShowBar=true
+    ShowBack="CanGoBack"
+    BackClicked="GoBack"
+    Title="@Title"
+>
+    <MainContent>
+        <LeftOverLayout>
+            <MainContent>
+                @if (_status == EnumUIStatus.BuildingWindmill)
+                {
+                    <WindmillComponent />
+                    return;
+                }
+                @if (_status == EnumUIStatus.BuildingPastryOven)
+                {
+                    <PastryOvenComponent />
+                    return;
+                }
+                <PrimaryButton OnClick="OpenWindmill">
+                    Windmill
+                </PrimaryButton>
+                <PrimaryButton OnClick="OpenPastryOven">
+                    Pastry Oven
+                </PrimaryButton>
+            </MainContent>
+            <BottomContent>
+                <InventoryComponent />
+            </BottomContent>
+        </LeftOverLayout>
+    </MainContent>
+</NavigationBarContainer>

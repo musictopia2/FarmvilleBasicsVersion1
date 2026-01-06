@@ -1,0 +1,90 @@
+﻿<StackLayout>
+    <StackItem>
+        <div style="font-size: 2rem;">
+            @{
+                var list = FullRequirements;
+            }
+            @foreach (var item in list)
+            {
+                <div style="width: 200px;">
+                    <span class="@GetRequirementClass(item.Key, item.Value)">
+                        @GetRequirementDetails(item.Key, item.Value)
+                    </span>
+                    @item.Key.Words
+                </div>
+            }
+        </div>
+        
+    </StackItem>
+    <StackItem>
+        <PrimaryButton IsEnabled="CanCraft"
+                        FontSize="2rem"
+                       OnClick="Craft">
+            Craft
+        </PrimaryButton>
+    </StackItem>
+    <StackItem>
+        <div style="font-size: 2rem; width: 200px;">
+            <div>
+                @CurrentAmount
+            </div>
+            <div>
+                @_chosen.Words
+            </div>
+            <div>
+                @GetTime
+            </div>
+        </div>
+        
+    </StackItem>
+
+    <StackItem>
+        @if (CanGoUp)
+        {
+            <ArrowUpComponent TargetHeight="10vh"
+                              Clicked="GoUp" />
+        }
+        @if (CanGoDown)
+        {
+            <ArrowDownComponent TargetHeight="10vh"
+                                Clicked="GoDown" />
+        }
+    </StackItem>
+</StackLayout>
+<div>
+    <h5>Crafting Queue</h5>
+    <div class="mt-2">
+        @if (state.Windmill.Queue.Any() == false)
+        {
+            <div class="alert alert-secondary">No jobs</div>
+        }
+        else
+        {
+            @foreach (var craft in state.Windmill.Queue)
+            {
+                <div class="card mb-2">
+                    <div class="card-body p-2">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <strong>@craft.Recipe.Item</strong>
+                            <small class="text-muted">Job @craft.Id.ToString().Substring(0, 8)</small>
+                        </div>
+                        <div class="mt-1">
+                            @if (craft.State == EnumJobState.Active)
+                            {
+                                <small>@CraftingDetails(craft)</small>
+                            }
+                            else if (craft.State == EnumJobState.Waiting)
+                            {
+                                <span class="badge bg-warning text-dark">Waiting</span>
+                            }
+                            else if (craft.State == EnumJobState.Completed)
+                            {
+                                <span class="badge bg-success">Completed</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
