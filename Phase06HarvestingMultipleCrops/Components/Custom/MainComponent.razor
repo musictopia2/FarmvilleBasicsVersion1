@@ -1,0 +1,84 @@
+﻿<h1 class="mb-3">Farm</h1>
+
+<div class="mb-3">
+    <span>Select Crop to Plant:</span>
+    <button class="btn btn-sm @(_selectedCrop == EnumCropType.Wheat ? "btn-primary" : "btn-outline-primary")"
+            @onclick="() => SelectCrop(EnumCropType.Wheat)">
+        Wheat
+    </button>
+    <button class="btn btn-sm @(_selectedCrop == EnumCropType.Corn ? "btn-primary" : "btn-outline-primary")"
+            @onclick="() => SelectCrop(EnumCropType.Corn)">
+        Corn
+    </button>
+</div>
+<div class="container p-0">
+    <div class="row row-cols-1 row-cols-md-4 g-2">
+        @foreach (var field in state.Fields)
+        {
+            <div class="col">
+                <div class="card h-100 text-center">
+                    <div class="card-body d-flex flex-column justify-content-between p-2">
+                        <div class="small">
+                            @if (field.State == EnumFieldState.Empty)
+                            {
+                                <span class="text-muted">Empty</span>
+                            }
+                            else if (field.State == EnumFieldState.Growing)
+                            {
+                                <div class="text-primary">
+                                    @GrowingText(field)
+                                </div>
+                                <div class="text-muted">
+                                    @ReadyText(field)
+                                </div>
+                            }
+                            else
+                            {
+                                <span class="text-success">Ready</span>
+                            }
+                        </div>
+                        <div>
+                            @if (field.State == EnumFieldState.Empty)
+                            {
+                                <PrimaryButton IsEnabled="CanPlant(field)" OnClick="() => Plant(field)">
+                                    @StartText
+                                </PrimaryButton>
+                            }
+                            else if (field.State == EnumFieldState.Ready)
+                            {
+                                <SuccessButton OnClick="() => Harvest(field)">
+                                    @HarvestText(field)
+                                </SuccessButton>
+                            }
+                            else
+                            {
+                                <button class="btn btn-sm btn-secondary w-100" disabled>
+                                    Growing…
+                                </button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@if (state.Inventory.Any())
+{
+    <div class="mt-3">
+        <h5>Inventory</h5>
+        <GridTwoColumnUnlimited ColumnGap="20px">
+            @foreach (var kvp in state.Inventory)
+            {
+                <div class="@css1.FwBold">@DisplayName(kvp.Key)</div>
+                <div>@kvp.Value</div>
+            }
+        </GridTwoColumnUnlimited>
+    </div>
+}
+else
+{
+    <div class="mt-3 text-muted">
+        Inventory is empty
+    </div>
+}
