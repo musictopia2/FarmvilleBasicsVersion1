@@ -1,0 +1,71 @@
+@page "/windmill"
+@using Phase01.Services
+@inject GameState GameState
+@implements IDisposable
+
+<h1>Windmill</h1>
+<div style="margin-bottom:8px;">Silo: <strong>@GameState.SiloWheat</strong> / @GameState.SiloCapacity &nbsp; | &nbsp; Barn: <strong>@GameState.BarnFlour</strong> / @GameState.BarnCapacity</div>
+
+<div style="margin-bottom:12px;">
+    <button @onclick="StartJob" disabled="@(!GameState.CanStartWindmillJob())">Start Flour (3 wheat ? 1 flour)</button>
+</div>
+<div>
+    <div><strong>Queue</strong></div>
+    <div style="margin-top:6px;">
+        @if (!GameState.WindmillQueue.Any())
+        {
+            <div>No jobs</div>
+        }
+        else
+        {
+            foreach (var job in GameState.WindmillQueue)
+            {
+                <div style="border:1px solid #888; padding:6px; margin-bottom:6px;">
+                    <div>Job @job.Id.ToString().Substring(0,8)</div>
+                    <div>State: @job.State</div>
+                    @if (job.State == JobState.Active)
+                    {
+                        <div>Progress: @job.ProgressPercent% (@((int)job.ProgressSeconds)s / 30s)</div>
+                    }
+                    else if (job.State == JobState.Waiting)
+                    {
+                        <div>Waiting</div>
+                    }
+                    else
+                    {
+                        <div>Completed</div>
+                    }
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@code {
+    private System.Threading.Timer? _uiTimer;
+
+
+    protected override void OnInitialized()
+    {
+        _uiTimer = new System.Threading.Timer(_ => RunTaskAsync(), null, 0, 1000);
+    }
+
+    private Task RunTaskAsync()
+    {
+        // foreach (var job in GameState.WindmillQueue)
+        // {
+        //     Console.WriteLine(job.State);
+        // }
+        return InvokeAsync(StateHasChanged);
+    }
+
+    void StartJob()
+    {
+        GameState.StartWindmillJob();
+    }
+
+    public void Dispose()
+    {
+        _uiTimer?.Dispose();
+    }
+}

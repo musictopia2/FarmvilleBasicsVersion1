@@ -1,0 +1,70 @@
+@page "/farm"
+@using Phase01.Services
+@inject GameState GameState
+@implements IDisposable
+
+<h1>Farm</h1>
+<div style="margin-bottom:8px;">Silo: <strong>@GameState.SiloWheat</strong> / @GameState.SiloCapacity</div>
+
+<div style="display:grid; grid-template-columns:repeat(4,120px); gap:8px;">
+    @foreach (var field in GameState.Fields)
+    {
+        <div style="border:1px solid #333; padding:8px; height:90px; display:flex; flex-direction:column; justify-content:space-between;">
+            <div>Field @field.Id</div>
+            <div>
+                @if (field.State == FieldState.Empty)
+                {
+                    <div>Empty</div>
+                }
+                else if (field.State == FieldState.Growing)
+                {
+                    <div>Growing (@field.ProgressPercent%)</div>
+                    <div style="font-size:11px;color:#666;">@((int)field.ProgressSeconds)s / 30s</div>
+                }
+                else
+                {
+                    <div>Ready</div>
+                }
+            </div>
+            <div>
+                @if (field.State == FieldState.Empty)
+                {
+                    <button @onclick="() => Plant(field)" disabled="@(!GameState.CanPlant(field))">Plant (-1)</button>
+                }
+                else if (field.State == FieldState.Ready)
+                {
+                    <button @onclick="() => Harvest(field)" disabled="@(!GameState.CanHarvest(field))">Harvest (+2)</button>
+                }
+                else
+                {
+                    <button disabled>...</button>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private System.Threading.Timer? _uiTimer;
+
+    protected override void OnInitialized()
+    {
+        // refresh UI every second
+        _uiTimer = new System.Threading.Timer(_ => InvokeAsync(StateHasChanged), null, 0, 1000);
+    }
+
+    void Plant(Field f)
+    {
+        GameState.Plant(f);
+    }
+
+    void Harvest(Field f)
+    {
+        GameState.Harvest(f);
+    }
+
+    public void Dispose()
+    {
+        _uiTimer?.Dispose();
+    }
+}
