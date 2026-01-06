@@ -1,0 +1,4 @@
+﻿For each field needs to show:
+
+2 (crop name)
+ready in (time new extension)
