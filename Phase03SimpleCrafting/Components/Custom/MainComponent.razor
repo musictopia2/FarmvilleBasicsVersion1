@@ -1,0 +1,92 @@
+﻿<PrimaryButton 
+    IsEnabled="CanCraftSugar"
+    OnClick="CraftSugar"
+>
+    Craft Sugar
+</PrimaryButton>
+<PrimaryButton 
+    IsEnabled="CanCraftFlour"
+    OnClick="CraftFlour"
+>
+    Craft Flour
+</PrimaryButton>
+
+<div>
+    <h5>Crafting Queue</h5>
+    <div class="mt-2">
+        @if (state.WindmillQueue.Any() == false)
+        {
+            <div class="alert alert-secondary">No jobs</div>
+        }
+        else
+        {
+            @foreach (var job in state.WindmillQueue)
+            {
+                <div class="card mb-2">
+                    <div class="card-body p-2">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <strong>@job.Job.Type</strong>
+                            <small class="text-muted">Job @job.Id.ToString().Substring(0, 8)</small>
+                        </div>
+
+                        <div class="mt-1">
+                            @if (job.State == EnumJobState.Active)
+                            {
+                                <div class="mb-1">
+                                    <div class="progress" style="height: 20px;">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                             role="progressbar"
+                                             style="width:@($"{job.ProgressPercent}%")"
+                                             aria-valuenow="@job.ProgressPercent"
+                                             aria-valuemin="0"
+                                             aria-valuemax="100">
+                                            @job.ProgressPercent%
+                                        </div>
+                                    </div>
+                                </div>
+                                <small>Crafting @job.Job.Type - @((int)job.ProgressSeconds)s / @job.Job.DurationSeconds s</small>
+                            }
+                            else if (job.State == EnumJobState.Waiting)
+                            {
+                                <span class="badge bg-warning text-dark">Waiting</span>
+                            }
+                            else if (job.State == EnumJobState.Completed)
+                            {
+                                <span class="badge bg-success">Completed</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+<div class="card-header">
+    <div class="@css1.FwBold" style="font-size: 1.5rem;">Inventory</div>
+</div>
+<GridTwoColumnUnlimited ColumnGap="20px">
+    <div class="@css1.FwBold">
+        Wheat:
+    </div>
+    <div>
+        @state.Wheat
+    </div>
+    <div class="@css1.FwBold">
+        Corn:
+    </div>
+    <div>
+        @state.Corn
+    </div>
+    <div class="@css1.FwBold">
+        Flour:
+    </div>
+    <div>
+        @state.Flour
+    </div>
+    <div class="@css1.FwBold">
+        Sugar:
+    </div>
+    <div>
+        @state.Sugar
+    </div>
+</GridTwoColumnUnlimited>
