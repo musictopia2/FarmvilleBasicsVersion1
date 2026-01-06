@@ -1,0 +1,13 @@
+﻿For this, decided to vibe code how crafting may work.
+
+Decided to do console so ui does not get in the way.
+
+
+ran into a few minor problems.
+
+because after something finished crafting, did not notify me (since i was using the custom menu option).
+
+i probably pushed as far as i could with the spectre console style stuff.
+
+i will call this a success (mostly).
+
