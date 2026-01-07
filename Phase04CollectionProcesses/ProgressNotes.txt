@@ -1,0 +1,32 @@
+So far, i did all the advanced collection processes for:
+1  crops
+2  trees
+3  animals
+
+
+remaining are:
+workshops
+worksites.
+
+for workshops, i need 2 things:
+1.  has to figure out how i can make it where if i go back to main and go back, can remember what i was at.
+should do that first.
+
+
+the second part:
+when crafting, deciding whether it can automatically pick it up or not.
+
+currently it does.
+
+but there is the possibility that it can't do automatically (or a person does not want to).
+
+
+worksites.
+for that, no issue if it goes back to the first worker again (the off the shelf one does).
+
+i think has 3 choices:
+1.  collect all.
+2.  collect one by one.
+3.  collect automatically.
+
+any advanced worker processes can wait for a future version.
