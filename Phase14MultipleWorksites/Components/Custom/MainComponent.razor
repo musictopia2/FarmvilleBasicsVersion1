@@ -1,0 +1,32 @@
+﻿<NavigationBarContainer
+    AlwaysShowBar=true
+    ShowBack="CanGoBack"
+    BackClicked="GoBack"
+    Title="@Title"
+>
+    <MainContent>
+        <LeftOverLayout>
+            <MainContent>
+                @if (_status == EnumUIStatus.WorksiteGrandmasGlade)
+                {
+                    <GrandmasGladeComponent />
+                    return;
+                }
+                @if (_status == EnumUIStatus.WorksitePond)
+                {
+                    <PondComponent />
+                    return;
+                }
+                <PrimaryButton OnClick="OpenGrandmasGlade">
+                    Grandmas Glade
+                </PrimaryButton>
+                <PrimaryButton OnClick="OpenPond">
+                    Pond
+                </PrimaryButton>
+            </MainContent>
+            <BottomContent>
+                <InventoryComponent />
+            </BottomContent>
+        </LeftOverLayout>
+    </MainContent>
+</NavigationBarContainer>
