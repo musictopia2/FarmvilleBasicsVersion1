@@ -1,0 +1,70 @@
+﻿@inherits TimedOnlyComponent
+@if (_selectedOption is null)
+{
+    return;
+}
+@if (_showOptions)
+{
+    <PopupCenteredStandard ShowCloseButton="true" Visible="true" CloseButtonClick="ClosePopup">
+        <AnimalChoiceModal Animal="Animal" OnOptionChosen="SelectOption" />
+    </PopupCenteredStandard>
+}
+<PrimaryButton IsEnabled="CanShowOptions"
+               OnClick="ChooseOption">
+    Show Options
+</PrimaryButton>
+<div class="mb-3">
+    <div>
+        @GetOptionChosenText
+    </div>
+    <div class="@css1.TextDanger">
+        @SecondDetails
+    </div>
+</div>
+@{
+    EnumAnimalState state = AnimalManager.GetState(Animal);
+    string name = AnimalManager.GetName(Animal);
+    string produced = _selectedOption.Output.Item;
+    int left = AnimalManager.Left(Animal);
+}
+<div class="mb-3">
+    <div>
+        <strong>@name State:</strong> @state
+    </div>
+    @if (state == EnumAnimalState.Producing)
+    {
+        <div class="text-primary">@ProducingText</div>
+        <div>@ReadyText</div>
+    }
+    else if (state == EnumAnimalState.Collecting)
+    {
+        <div class="text-success">@produced ready to collect!</div>
+        <div>@left @produced left to collect</div>
+    }
+    else
+    {
+        <div class="text-muted">Idle</div>
+    }
+</div>
+
+<div class="mb-3">
+    @if (state == EnumAnimalState.None)
+    {
+        <PrimaryButton IsEnabled="@AnimalManager.CanProduce(Animal, _selectedIndex)" OnClick="Produce">
+            Produce @produced
+        </PrimaryButton>
+    }
+    else if (state == EnumAnimalState.Collecting)
+    {
+        <SuccessButton IsEnabled="CanCollect" OnClick="Collect">
+            Collect 1 @produced
+        </SuccessButton>
+    }
+    else
+    {
+        <button class="btn btn-sm btn-secondary w-20" disabled>
+            Producing…
+        </button>
+    }
+</div>
+

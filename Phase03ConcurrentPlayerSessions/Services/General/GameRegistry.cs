@@ -1,0 +1,30 @@
+﻿namespace Phase03ConcurrentPlayerSessions.Services.General;
+public class GameRegistry
+{
+    private BasicList<IGameTimer> _farms = [];
+    public async Task InitializeFarmAsync(IGameTimer timer, PlayerState player)
+    {
+        await timer.SetThemeContextAsync(player);
+        _farms.Add(timer);
+    }
+    public MainFarmContainer GetFarm(PlayerState state)
+    {
+        foreach (var farm in _farms)
+        {
+            CustomBasicException.ThrowIfNull(farm.PlayerState);
+            CustomBasicException.ThrowIfNull(farm.FarmContainer);
+            if (farm.PlayerState.Equals(state))
+            {
+                return farm.FarmContainer;
+            }
+        }
+        throw new CustomBasicException($"No farm found for {state}");
+    }
+    public void Tick()
+    {
+        _farms.ForEach(farm =>
+        {
+            farm.Tick();
+        });
+    }
+}
