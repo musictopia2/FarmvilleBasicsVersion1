@@ -78,9 +78,9 @@ public static class ImportWorkshopRecipeClass
             BuildingName = CountryWorkshopList.StovetopOven,
             Inputs =
             {
-                [CountryItemList.GoatMilk] = 8,
-                [CountryItemList.Carrot] = 10,
-                [CountryItemList.Tomato] = 4
+                [CountryItemList.GoatMilk] = 4,
+                [CountryItemList.Carrot] = 5,
+                [CountryItemList.Tomato] = 2
             },
             Output = new ItemAmount(CountryItemList.FarmersSoup, 1),
             Duration = TimeSpan.FromMinutes(3.5),
