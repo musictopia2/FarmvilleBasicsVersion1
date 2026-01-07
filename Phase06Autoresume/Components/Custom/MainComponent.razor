@@ -1,0 +1,58 @@
+﻿<NavigationBarContainer
+    AlwaysShowBar=true
+    ShowBack="CanGoBack"
+    BackClicked="GoBack"
+    Title="@Title"
+>
+    <BarContent>
+        <PrimaryButton Style="color: white; background-color: black;" OnClick="ChooseAnotherStyle">
+            Choose Another Style
+        </PrimaryButton>
+    </BarContent>
+    <MainContent>
+
+        <LeftOverLayout>
+            <TopContent>
+                <QuestBookComponent />
+            </TopContent>
+            <MainContent>
+                @if (_cropsLoaded)
+                {
+                    <CropsComponent />
+                    return;
+                }
+                @if (_currentWorksite != "")
+                {
+                    <WorksiteComponent Location="@_currentWorksite" />
+                    return;
+                }
+                @if (_currentWorkshop != null)
+                {
+                    <WorkshopComponent Workshop="@_currentWorkshop" />
+                    return;
+                }
+                <div>
+                    <PrimaryButton OnClick="LoadCrops">
+                        Load Crops
+                    </PrimaryButton>
+                </div>
+                <div>
+                    <AnimalsComponent />
+                </div>
+                <div>
+                    <TreesComponent />
+                </div>
+                <div>
+                    <WorkshopsComponent WorkshopSelected="OpenWorkshop" />
+                </div>
+                <div>
+                    <WorksitesComponent WorksiteSelected="OpenWorksite" />
+                </div>
+                
+            </MainContent>
+            <BottomContent>
+                <InventoryDisplayComponent />
+            </BottomContent>
+        </LeftOverLayout>
+    </MainContent>
+</NavigationBarContainer>

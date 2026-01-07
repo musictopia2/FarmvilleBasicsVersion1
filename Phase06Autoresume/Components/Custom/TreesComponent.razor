@@ -1,0 +1,39 @@
+﻿@inherits TimedOnlyComponent
+<WrapLayout ColumnWidth="200px" RenderList="_trees" Context="tree">
+    @{
+        EnumTreeState state = TreeManager.GetTreeState(tree);
+    }
+    <div class="mb-3">
+        <div>
+            <strong>Tree State:</strong> @state
+        </div>
+        @if (state == EnumTreeState.Producing)
+        {
+            <div class="text-primary">@ProduceText(tree)</div>
+            <div>@ReadyText(tree)</div>
+        }
+        else if (state == EnumTreeState.Collecting)
+        {
+            <div class="text-success">
+                @GetName(tree) ready to collect: @TreeManager.TreesReady(tree)
+            </div>
+        }
+    </div>
+    <div class="mb-3">
+        @if (TreeManager.TreesReady(tree) > 0)
+        {
+            <SuccessButton OnClick="async () => await CollectResultAsync(tree)">
+                Collect @GetName(tree)
+            </SuccessButton>
+        }
+        else if (state == EnumTreeState.Producing)
+        {
+            <button class="btn btn-sm btn-secondary w-20" disabled>
+                Producing…
+            </button>
+        }
+    </div>
+
+
+
+</WrapLayout>
