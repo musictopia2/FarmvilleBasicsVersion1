@@ -1,0 +1,15 @@
+﻿@inherits FarmComponentBase
+<WrapLayout RenderList="_workshops" ColumnWidth="100px" Context="workshop">
+   
+
+    <div class="workshop-tile" @onclick="() => SelectWorkshop(workshop)">
+        <img class="workshop-img"
+             src="@Image(workshop)"
+             draggable="false" />
+
+        @if (workshop.ReadyCount > 0)
+        {
+            <div class="workshop-badge">@workshop.ReadyCount</div>
+        }
+    </div>
+</WrapLayout>

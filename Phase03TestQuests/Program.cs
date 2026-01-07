@@ -1,0 +1,16 @@
+﻿mm1.Prep();
+await ii1.ImportInventoryClass.ImportBeginningInventoryAmountsAsync();
+await ii1.ImportCropRecipeClass.ImportCropsAsync();
+await ii1.ImportCropInstanceClass.ImportCropsAsync();
+await ii1.ImportTreeRecipeClass.ImportTreesAsync();
+await ii1.ImportTreeInstanceClass.ImportTreesAsync();
+await ii1.ImportAnimalRecipeClass.ImportAnimalsAsync();
+await ii1.ImportAnimalInstanceClass.ImportAnimalsAsync();
+await ii1.ImportWorkshopRecipeClass.ImportWorkshopsAsync();
+await ii1.ImportWorkshopInstanceClass.ImportWorkshopsAsync();
+await ii1.ImportWorksiteRecipeClass.ImportWorksitesAsync();
+await ii1.ImportWorksiteInstancesClass.ImportWorksitesAsync();
+await ii1.ImportWorkerRecipeClass.ImportWorkersAsync();
+await ii1.ImportStartClass.ImportStartAsync();
+await ii1.ImportQuestInstancesClass.ImportQuestsAsync();
+Console.WriteLine("Completed");

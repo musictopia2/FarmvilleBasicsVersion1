@@ -1,0 +1,61 @@
+﻿@inherits FarmComponentBase
+
+<div class="p-2" style="min-width: 320px;">
+    <div class="fw-bold mb-2">Choose production</div>
+
+    @for (int i = 0; i < _productionOptions.Count; i++)
+    {
+        var option = _productionOptions[i];
+
+        bool canStart = AnimalManager.CanProduce(Animal, i);
+
+        int needReq = option.Input;
+        int haveReq = Have(option.Required);
+
+        int haveOut = Have(option.Output.Item);
+
+        <div class="card p-2 mb-2 @(canStart ? "" : "opacity-50")">
+            <div class="d-flex align-items-center justify-content-between gap-3">
+
+                <!-- Requires -->
+                <div class="d-flex flex-column">
+                    <div class="d-flex align-items-center gap-2">
+                        
+                        <img src="@GetItemImage(option.Required)"
+                             alt="@option.Required"
+                             style="width: 48px; height: 48px; object-fit: contain;" />
+                    </div>
+
+                    <div class="fw-bold @(haveReq >= needReq ? "text-success" : "text-danger")"
+                         style="font-size: 1rem; line-height: 1.1;">
+                         @Details(haveReq, needReq)
+                    </div>
+                </div>
+
+                <!-- Produces -->
+                <div class="d-flex flex-column align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="fw-bold">Produces @option.Output.Amount</div>
+                        <img src="@GetItemImage(option.Output.Item)"
+                             alt="@option.Output.Item"
+                             style="width: 48px; height: 48px; object-fit: contain;" />
+                    </div>
+
+                    <div class="fw-bold text-muted" style="font-size: 1rem; line-height: 1.1;">
+                        @GetDurationText(option)
+                    </div>
+
+                    <div class="barn-amount text-muted">
+                        <img src="/Barn.png" height="30" alt="Barn" />
+                        <span>@haveOut</span>
+                    </div>
+                </div>
+
+                <PrimaryButton IsEnabled="canStart"
+                               OnClick="() => OptionSelected(option)">
+                    Start
+                </PrimaryButton>
+            </div>
+        </div>
+    }
+</div>

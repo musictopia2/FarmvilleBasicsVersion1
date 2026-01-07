@@ -1,0 +1,62 @@
+﻿.quest-card {
+    border: 2px solid #666;
+    border-radius: 12px;
+    background: white;
+    padding: 10px;
+    width: 320px;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.req-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background: white;
+    padding: 6px;
+    box-sizing: border-box;
+}
+
+.req-img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    flex: 0 0 auto;
+}
+
+.req-text {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.req-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.req-detail {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.req-ok {
+    color: #198754; /* bootstrap green */
+}
+
+.req-bad {
+    color: #dc3545; /* bootstrap red */
+}
+
+.quest-title {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}

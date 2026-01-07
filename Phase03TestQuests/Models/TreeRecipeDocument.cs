@@ -1,0 +1,9 @@
+﻿namespace Phase03TestQuests.Models;
+public class TreeRecipeDocument
+{
+    required public string TreeName { get; init; }
+    public string Item { get; init; } = ""; //this is what you receive from the tree.
+    public TimeSpan ProductionTimeForEach { get; init; }
+    required public string Theme { get; init; }
+    required public string Mode { get; init; }
+}
