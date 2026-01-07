@@ -1,0 +1,104 @@
+﻿@inherits TimedOnlyComponent
+<PopupCenteredFull DisableBackgroundClick="false"
+                   CloseButtonClick="CloseBarn"
+                   ShowCloseButton="true"
+                   Width="45vw"
+                   HeaderTitle="Barn"
+                   @bind-Visible="_showBarn">
+
+    <div style="user-select: none">
+        <InventoryDisplayComponent />
+    </div>
+   
+
+</PopupCenteredFull>
+
+<PopupFullTapToClose CloseButtonClick="CloseWorksite"
+    Width="80vw"
+    Height="70vh"
+    CanCloseAutomatically="CanCloseWorksiteAutomatically"
+    @bind-Visible="_showWorksite"
+>
+    <div style="user-select: none">
+        <WorksiteComponent Location="@_currentWorksite"
+            OnCloseManually="CloseWorksite"
+            />
+    </div>
+    
+</PopupFullTapToClose>
+
+
+<PopupFullTapToClose CloseButtonClick="CloseWorkshop"
+                     Width="80vw"
+                     Height="70vh"
+                     @bind-Visible="_showWorkshop">
+    @if (_currentWorkshop is not null)
+    {
+        <WorkshopComponent Workshop="@_currentWorkshop" />
+    }
+    else
+    {
+        <div>
+            Has nothing
+        </div>
+    }
+</PopupFullTapToClose>
+
+<NavigationBarContainer
+    AlwaysShowBar=true
+    ShowBack="CanGoBack"
+    BackClicked="GoBack"
+    Title="@Title"
+>
+    <BarContent>
+        <PrimaryButton Style="color: white; background-color: black;" OnClick="ChooseAnotherStyle">
+            Choose Another Style
+        </PrimaryButton>
+    </BarContent>
+    <MainContent>
+
+        <LeftOverLayout>
+            <TopContent>
+                <QuestBookComponent />
+            </TopContent>
+            <MainContent>
+                @if (_cropsLoaded)
+                {
+                    <CropsComponent />
+                    return;
+                }
+                @{
+                    // compute once for the button
+                    var readyCount = CropManager.GetUnlockedCrops.Count(id => GetState(id) == EnumCropState.Ready);
+                    var hasReady = readyCount > 0;
+                }
+
+                <div class="load-crops-wrap">
+                    <PrimaryButton OnClick="LoadCrops">
+                        Load Crops
+                        @if (hasReady)
+                        {
+                            <span class="main-ready-dot" title="Crops ready"></span>
+                        }
+                    </PrimaryButton>
+                </div>
+                <div>
+                    <AnimalsComponent />
+                </div>
+                <div>
+                    <TreesComponent />
+                </div>
+                <div>
+                    <WorkshopsComponent WorkshopSelected="OpenWorkshop" />
+                </div>
+                <div>
+                    <WorksitesComponent WorksiteSelected="OpenWorksite" />
+                </div>
+                
+            </MainContent>
+            <BottomContent>
+                <img src="/Barn.png" width="100" @onclick="ShowBarn" />
+            </BottomContent>
+        </LeftOverLayout>
+    </MainContent>
+</NavigationBarContainer>

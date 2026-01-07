@@ -1,0 +1,60 @@
+﻿@inherits FarmComponentBase
+<style>
+    .barn-amount {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        justify-content: center; /* centered under produces */
+        font-size: 0.95rem;
+        font-weight: 700;
+        line-height: 1.1;
+    }
+
+        .barn-amount img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+</style>
+<div class="p-2" style="min-width: 320px;">
+    <div class="fw-bold mb-2">Choose production</div>
+
+    @foreach (var option in _productionOptions)
+    {
+        <div class="card p-2 mb-2">
+            <div class="d-flex align-items-center justify-content-between gap-3">
+
+                <!-- Requires -->
+                <div class="d-flex align-items-center gap-2">
+                    <div class="fw-bold">@option.Input</div>
+                    <img src="@GetItemImage(option.Required)"
+                         alt="@option.Required"
+                         style="width: 48px; height: 48px; object-fit: contain;" />
+                    
+                </div>
+
+                <!-- Produces -->
+                <div class="d-flex flex-column align-items-center">
+
+                    <!-- Top line: Produces amount + image -->
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="fw-bold">Produces @option.Output.Amount</div>
+                        <img src="@GetItemImage(option.Output.Item)"
+                             alt="@option.Output.Item"
+                             style="width: 48px; height: 48px; object-fit: contain;" />
+                    </div>
+
+                    <!-- Seconds text: larger + centered under both -->
+                    <div class="fw-bold text-muted"
+                         style="font-size: 1rem; line-height: 1.1;">
+                        @GetDurationText(option)
+                    </div>
+                </div>
+
+                <PrimaryButton OnClick="() => OptionSelected(option)">
+                    Start
+                </PrimaryButton>
+            </div>
+        </div>
+    }
+</div>

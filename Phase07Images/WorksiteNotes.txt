@@ -1,0 +1,35 @@
+When you have to pick up the rewards:
+
+a different ui.
+
+for this, show the image.
+
+needs feature where a person chooses which one you pick up.
+
+since this was set to one at a time, then you pick up one at a time.
+but ther person has a choice of which one is picked up though.
+
+if a person cannot pick up for whatever reason, then must close out of the worksite.
+
+show the workers that was used.
+and the rewards ui.
+
+
+show image
+and number (how many of the reward) on bottom right.
+
+this means there are 3 uis.
+
+
+the second one is when its busy.
+
+
+
+<div style="color: white">
+             Completed.  Rethink.
+         </div>
+         <div style="background-color: white; height: 200px" @onclick="OnCloseManually">
+             Close Me Now Temporarily.
+         </div>
+         this is an example of how i can close when i need to.
+

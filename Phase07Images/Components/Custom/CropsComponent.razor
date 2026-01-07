@@ -1,0 +1,222 @@
+﻿@inherits TimedOnlyComponent
+
+
+<div class="mb-3">
+    <div class="mb-1">Select Crop to Plant:</div>
+
+    <div class="crop-picker">
+        @foreach (var item in _crops)
+        {
+            var isSelected = _selectedItem == item;
+
+            <div class="crop-pick-tile @(isSelected ? "selected" : "")"
+                 role="button"
+                 tabindex="0"
+                 @onclick="() => SelectCrop(item)">
+                <div class="inv-badge">@InventoryAmount(item)</div>
+                 
+                <img class="crop-pick-img"
+                     src="@GetCropImageSrc(item)"
+                     alt="@item" />
+            </div>
+        }
+    </div>
+</div>
+
+<!-- TIGHT TILE GRID (no Bootstrap row/col/gutters) -->
+<div class="farm-grid">
+    @foreach (var id in CropManager.GetUnlockedCrops)
+    {
+        EnumCropState state = GetState(id);
+
+        <div class="farm-tile">
+            <div class="card text-center crop-card crop-card-100"
+                 role="button"
+                 style="background-color: @GetBackground(state);"
+                 tabindex="0"
+                 @onclick="() => OnCardClick(id)">
+                <div class="card-body p-1 position-relative d-flex flex-column">
+
+                    <!-- Top-right badge tells what clicking does -->
+                    <div class="crop-badge" title="@GetBadgeTitle(state)">
+                        @BadgeSvg(state)
+                    </div>
+
+                    <!-- Main slot content -->
+                    <div class="crop-slot flex-grow-1 d-flex align-items-center justify-content-center">
+                        @if (state == EnumCropState.Empty)
+                        {
+                            <div class="empty-plot" aria-label="Empty plot"></div>
+                        }
+                        else
+                        {
+                            <img class="crop-img"
+                                 src="@GetCropImageSrc(id)"
+                                 alt="@CropManager.GetCropName(id)" />
+                        }
+                    </div>
+
+                    @* OPTIONAL footer (remove if you want maximum space) *@
+                    @* 
+                    <div class="small mt-1">
+                        @if (state == EnumCropState.Empty)
+                        {
+                            <span class="text-muted">Empty</span>
+                        }
+                        else if (state == EnumCropState.Growing)
+                        {
+                            <span class="text-primary">Growing</span>
+                        }
+                        else
+                        {
+                            <span class="text-success">Ready</span>
+                        }
+                    </div>
+                    *@
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (_showProgressModal)
+{
+    <PopupCenteredStandard
+        @bind-Visible="_showProgressModal"
+        AutoCloseMilliseconds="6000"
+        Height="100px"
+        DisableBackgroundClick="false"
+
+    >
+        <CropProgress Id="_progressCropId" />
+    </PopupCenteredStandard>
+}
+<style>
+    /* --- Crop Picker (top) --- */
+    .crop-picker {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0; /* no gaps */
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 0;
+        margin: 0;
+    }
+
+    .crop-pick-tile {
+        width: 60px;
+        height: 60px;
+        border-radius: 0;
+        border: 1px solid rgba(0,0,0,0.12);
+        background: rgba(255,255,255,0.95);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        margin: 0;
+        padding: 0;
+        position: relative; /* IMPORTANT for badge positioning */
+        overflow: hidden; /* prevents badge from spilling outside */
+    }
+
+    /* Inventory amount badge */
+    .inv-badge {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        /* fixed-ish badge sizing so it never changes layout */
+        height: 16px;
+        padding: 0 4px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 16px;
+        background: rgba(0,0,0,0.75);
+        color: white;
+        /* prevent cut-off and shifting */
+        max-width: 52px; /* 60 - padding */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        pointer-events: none;
+    }
+
+        .crop-pick-tile.selected {
+            background: aqua; /* requested */
+        }
+
+    .crop-pick-img {
+        width: 46px;
+        height: 46px;
+        object-fit: contain;
+        pointer-events: none;
+    }
+
+    /* --- Farm Tight Grid --- */
+    .farm-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0; /* no gaps */
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 0;
+        margin: 0;
+    }
+
+    .farm-tile {
+        width: 100px;
+        height: 100px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .crop-card-100 {
+        width: 100px;
+        height: 100px;
+        margin: 0;
+        border-radius: 0; /* snap together */
+        border: 1px solid rgba(0,0,0,0.12); /* thin gridline (optional) */
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .crop-slot {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .crop-img {
+        width: 60px;
+        height: 60px;
+        object-fit: contain;
+        pointer-events: none;
+    }
+
+    .empty-plot {
+        width: 60px;
+        height: 60px;
+        border-radius: 0; /* snap together */
+        border: 2px dashed rgba(0,0,0,0.15);
+        background: rgba(0,0,0,0.03);
+    }
+
+    .crop-badge {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        width: 22px;
+        height: 22px;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255,255,255,0.92);
+        border: 1px solid rgba(0,0,0,0.10);
+        color: #333;
+        pointer-events: none; /* so clicking the badge still clicks the card */
+    }
+</style>
