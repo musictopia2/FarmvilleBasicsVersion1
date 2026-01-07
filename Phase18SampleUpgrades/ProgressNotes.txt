@@ -1,0 +1,31 @@
+so far, i did the basics for upgrades/unlocks for workshops.
+
+did not go any further for that yet.
+
+next, will test whether i can unlock or lock workshops.
+
+the test would be the cow and the chicken.
+
+has to see if i need ui upgdates or not (?)
+
+next steps:
+1.  figure out extra fields (some fields are locked to start with)
+2.  figure out the trees
+3.  figure out the animals
+this can have extra challenge because you may need to lock options and eventually unlock options as well.
+has to do with animal policy.
+4.  figure out the worksites.
+5.  figure out the workers.
+
+
+so far, i did the animals and for workshops.
+including for animals having options locked to start with (i unlock later).
+
+
+parts left:
+1.  fields (done)
+2.  trees
+3.  workers
+4.  worksites.
+
+i may have some workers a person at first does not have but later gets it.

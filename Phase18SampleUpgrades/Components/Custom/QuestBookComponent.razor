@@ -1,0 +1,22 @@
+﻿@inherits InventoryAwareComponentBase
+@if (_incompleteQuests.Count == 0)
+{
+    <div>You completed all the quests</div>
+    return;
+}
+<StackLayout ItemSpacing="20px">
+    @foreach (var quest in _incompleteQuests)
+    {
+        <StackItem Length="20vw">
+            <div style="font-size: 1.4rem;">
+                @Display(quest)
+            </div>
+            <div>
+                <PrimaryButton IsEnabled="CanCompleteQuest(quest)"
+                               OnClick="() => CompleteQuest(quest)">
+                    Complete Quest
+                </PrimaryButton>
+            </div>
+        </StackItem>
+    }
+</StackLayout>

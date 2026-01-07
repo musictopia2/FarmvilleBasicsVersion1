@@ -1,0 +1,4 @@
+I finally was able to show getting extra workers later in the game.
+plus locking workers later.
+
+same thing for worksites, crops, what you can plant, animals including quantities, trees, workshops.
