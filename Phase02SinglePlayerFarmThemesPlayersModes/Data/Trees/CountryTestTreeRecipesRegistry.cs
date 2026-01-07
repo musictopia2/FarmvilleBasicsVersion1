@@ -1,0 +1,23 @@
+﻿namespace Phase02SinglePlayerFarmThemesPlayersModes.Data.Trees;
+public class CountryTestTreeRecipesRegistry : ITreeRecipes
+{
+    Task<BasicList<TreeRecipe>> ITreeRecipes.GetTreesAsync()
+    {
+        BasicList<TreeRecipe> output = [];
+        TreeRecipe tree = new()
+        {
+            TreeName = CountryTreeListClass.Apple,
+            Item = CountryItemList.Apples,
+            ProductionTimeForEach = TimeSpan.FromSeconds(5)
+        };
+        output.Add(tree);
+        tree = new()
+        {
+            TreeName = CountryTreeListClass.Peach,
+            Item = CountryItemList.Peaches,
+            ProductionTimeForEach = TimeSpan.FromSeconds(10)
+        };
+        output.Add(tree);
+        return Task.FromResult(output);
+    }
+}
