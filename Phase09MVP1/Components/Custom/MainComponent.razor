@@ -1,0 +1,56 @@
+﻿@inherits FarmComponentBase
+<CascadingValue IsFixed=true Value="_overlays">
+
+
+    <PopupViewport
+            GapLeftPx="10"
+            GapRightPx="10"
+            GapTopPx="10"
+            GapBottomPx="10"
+            ShowHeaders="true"
+            HeaderTitle="Barn"
+            CloseButtonClick="CloseBarn"
+            @bind-Visible="_showBarn"
+    >
+        <InventoryDisplayComponent />
+    </PopupViewport>
+    
+
+
+    <NavigationBarContainer @ref="_nav"
+                            AlwaysShowBar=true
+                            ShowBack="false"
+                            Title="@Title">
+        <IndicatorContent>
+
+            <CompletionBell />
+
+        </IndicatorContent>
+        <BarContent>
+            
+            <PrimaryButton Style="color: white; background-color: black;" OnClick="CloseAllPopupsAsync">
+                Close All Popups
+            </PrimaryButton>
+            <PrimaryButton Style="color: white; background-color: black;" OnClick="ChooseAnotherTheme">
+                Choose Another Theme
+            </PrimaryButton>
+        </BarContent>
+        <HeaderContent>
+            <QuestTrackerComponent />
+        </HeaderContent>
+        <MainContent>
+            
+            <OverlayHost />
+            <MainSectionLauncher ReadyCategory="EnumMainSection.Crops" />
+            <MainSectionLauncher ReadyCategory="EnumMainSection.Trees" />
+            <MainSectionLauncher ReadyCategory="EnumMainSection.Animals" />
+            <MainSectionLauncher ReadyCategory="EnumMainSection.Workshops" />
+            <div>
+                <WorksitesComponent />
+            </div>
+            <img src="/Barn.png" width="100" @onclick="ShowBarn" />
+
+
+        </MainContent>
+    </NavigationBarContainer>
+</CascadingValue>

@@ -1,0 +1,12 @@
+one bug:
+when going to a worksite, does not show the workers anymore.
+
+another related bug.
+when collecting the rewards, does not show the workers that was used.
+
+hint:
+probably when using the new system to help with positioning.
+
+somehow that was cut off.
+
+hopefully can fix that problem.
