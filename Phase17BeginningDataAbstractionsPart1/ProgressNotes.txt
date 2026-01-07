@@ -1,0 +1,12 @@
+Here is where i specify what i am working on.
+
+
+
+so far, the last parts left are:
+1.  put together the main component (new navigation now).
+hints:
+has event handling for the components for workshops and worksites.
+
+2.  start testing.
+
+can expect lots of bugs.
