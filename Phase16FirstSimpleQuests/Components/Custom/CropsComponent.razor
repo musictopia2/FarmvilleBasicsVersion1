@@ -1,0 +1,74 @@
+﻿<h1 class="mb-3">Farm</h1>
+
+<div class="mb-3">
+    <span>Select Crop to Plant:</span>
+    <button class="btn btn-sm @(_selectedItem == EnumItemType.Wheat ? "btn-primary" : "btn-outline-primary")"
+            @onclick="() => SelectCrop(EnumItemType.Wheat)">
+        Wheat
+    </button>
+    <button class="btn btn-sm @(_selectedItem == EnumItemType.Corn ? "btn-primary" : "btn-outline-primary")"
+            @onclick="() => SelectCrop(EnumItemType.Corn)">
+        Corn
+    </button>
+    <button class="btn btn-sm @(_selectedItem == EnumItemType.Honey ? "btn-primary" : "btn-outline-primary")"
+            @onclick="() => SelectCrop(EnumItemType.Honey)">
+        Honey
+    </button>
+    <button class="btn btn-sm @(_selectedItem == EnumItemType.Shrimp ? "btn-primary" : "btn-outline-primary")"
+            @onclick="() => SelectCrop(EnumItemType.Shrimp)">
+        Shrimp
+    </button>
+
+</div>
+<div class="container p-0">
+    <div class="row row-cols-1 row-cols-md-4 g-2">
+        @foreach (var crop in state.CropInstances)
+        {
+            <div class="col">
+                <div class="card h-100 text-center">
+                    <div class="card-body d-flex flex-column justify-content-between p-2">
+                        <div class="small">
+                            @if (crop.State == EnumCropState.Empty)
+                            {
+                                <span class="text-muted">Empty</span>
+                            }
+                            else if (crop.State == EnumCropState.Growing)
+                            {
+                                <div class="text-primary">
+                                    @GrowingText(crop)
+                                </div>
+                                <div class="text-muted">
+                                    @ReadyText(crop)
+                                </div>
+                            }
+                            else
+                            {
+                                <span class="text-success">Ready</span>
+                            }
+                        </div>
+                        <div>
+                            @if (crop.State == EnumCropState.Empty)
+                            {
+                                <PrimaryButton IsEnabled="CanPlant(crop)" OnClick="() => Plant(crop)">
+                                    @StartText
+                                </PrimaryButton>
+                            }
+                            else if (crop.State == EnumCropState.Ready)
+                            {
+                                <SuccessButton OnClick="() => Harvest(crop)">
+                                    @HarvestText(crop)
+                                </SuccessButton>
+                            }
+                            else
+                            {
+                                <button class="btn btn-sm btn-secondary w-100" disabled>
+                                    Growing…
+                                </button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

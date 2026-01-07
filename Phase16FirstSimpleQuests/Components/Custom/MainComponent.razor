@@ -1,0 +1,98 @@
+﻿<NavigationBarContainer
+    AlwaysShowBar=true
+    ShowBack="CanGoBack"
+    BackClicked="GoBack"
+    Title="@Title"
+>
+    <MainContent>
+        <LeftOverLayout>
+            <TopContent>
+                <QuestBookComponent />
+            </TopContent>
+            <MainContent>
+                @if (_status == EnumUIStatus.Crops)
+                {
+                    <CropsComponent />
+                    return;
+                }
+                @if (_status == EnumUIStatus.Cow)
+                {
+                    <CowComponent />
+                    return;
+                }
+                @if (_status == EnumUIStatus.Chicken)
+                {
+                    <ChickenComponent />
+                    return;
+                }
+                @if (_status == EnumUIStatus.AppleTrees)
+                {
+                    <AppleTreeComponent />
+                    return;
+                }
+                @if (_status == EnumUIStatus.PeachTrees)
+                {
+                    <PeachTreeComponent />
+                    return;
+                }
+                @if (_status == EnumUIStatus.WorksiteGrandmasGlade)
+                {
+                    <GrandmasGladeComponent />
+                    return;
+                }
+                @if (_status == EnumUIStatus.WorksitePond)
+                {
+                    <PondComponent />
+                    return;
+                }
+                @if (_status == EnumUIStatus.BuildingWindmill)
+                {
+                    <WindmillComponent />
+                    return;
+                }
+                @if (_status == EnumUIStatus.BuildingPastryOven)
+                {
+                    <PastryOvenComponent />
+                    return;
+                }
+                <div>
+                    <PrimaryButton OnClick="OpenCrops">
+                        Crops
+                    </PrimaryButton>
+                    <PrimaryButton OnClick="OpenCow">
+                        Cow
+                    </PrimaryButton>
+                    <PrimaryButton OnClick="OpenChicken">
+                        Chicken
+                    </PrimaryButton>
+                    <PrimaryButton OnClick="OpenAppleTrees">
+                        Apple Trees
+                    </PrimaryButton>
+                    <PrimaryButton OnClick="OpenPeachTrees">
+                        Peach Trees
+                    </PrimaryButton>
+                </div>
+                
+                <div>
+                    <PrimaryButton OnClick="OpenWindmill">
+                        Windmill
+                    </PrimaryButton>
+                    <PrimaryButton OnClick="OpenPastryOven">
+                        Pastry Oven
+                    </PrimaryButton>
+                    <PrimaryButton OnClick="OpenGrandmasGlade">
+                        Grandmas Glade
+                    </PrimaryButton>
+                    <PrimaryButton OnClick="OpenPond">
+                        Pond
+                    </PrimaryButton>
+                </div>
+               
+                
+            </MainContent>
+            <BottomContent>
+                <InventoryComponent />
+            </BottomContent>
+        </LeftOverLayout>
+    </MainContent>
+</NavigationBarContainer>

@@ -1,0 +1,129 @@
+﻿@if (_currentWorker is null)
+{
+    return;
+}
+<StackLayout ItemSpacing="20px">
+
+    <StackItem>
+        <div style="height: 60px; visibility:@(CanGoUp ? "visible" : "hidden");">
+            <ArrowUpComponent TargetHeight="100%" Clicked="GoUp" />
+        </div>
+        <div style="height: 60px; margin-top: 5px; visibility:@(CanGoDown ? "visible" : "hidden");">
+            <ArrowDownComponent TargetHeight="100%"
+                                Clicked="GoDown" />
+        </div>
+    </StackItem>
+    <StackItem Length="20vw">
+        <div>Name Is @_currentWorker.WorkerName</div>
+        <div>
+            @_currentWorker.Details
+        </div>
+        <div>
+            @if (_currentWorker.WorkerStatus == EnumWorkerStatus.Selected && _currentWorker.CurrentLocation == EnumWorksiteLocation.Pond)
+            {
+                <PrimaryButton OnClick="RemoveWorker">
+                    Remove Worker
+                </PrimaryButton>
+            }
+            @if (_currentWorker.WorkerStatus == EnumWorkerStatus.None)
+            {
+                <PrimaryButton OnClick="AddWorker">
+                    Add Worker
+                </PrimaryButton>
+            }
+        </div>
+    </StackItem>
+    <StackItem>
+        <div>
+            Supplies Needed
+        </div>
+        <GridTwoColumnUnlimited>
+            @foreach (var item in PondSuppliesNeeded)
+            {
+                <div>
+                    @item.Item.Words
+                </div>
+                <div>
+                    @item.Amount
+                </div>
+            }
+        </GridTwoColumnUnlimited>
+
+        <div>
+            Selected Workers
+        </div>
+        @foreach (var worker in _workers)
+        {
+            if ((worker.WorkerStatus == EnumWorkerStatus.Selected || worker.WorkerStatus == EnumWorkerStatus.Working) && worker.CurrentLocation == EnumWorksiteLocation.Pond)
+            {
+                <div>
+                    @worker.WorkerName
+                </div>
+            }
+        }
+    </StackItem>
+    <StackItem>
+        <div style="height: 60px; width: 300px; display: flex; align-items: center; justify-content: center;">
+            @if (PondStatus == EnumWorksiteState.Processing)
+            {
+                @GetPondProgressText
+                @* <DangerButton>
+                    Processing...
+                </DangerButton> *@
+            }
+            else if (PondStatus == EnumWorksiteState.None)
+            {
+                <SuccessButton IsEnabled="CanGoToPond" OnClick="GoToPond">
+                    @GetPondDurationText
+                </SuccessButton>
+            }
+            else if (PondStatus == EnumWorksiteState.Collecting)
+            {
+                <SuccessButton OnClick="CollectAllRewards">
+                    Collect All Rewards
+                </SuccessButton>
+            }
+        </div>
+
+    </StackItem>
+
+    <StackItem>
+        <div>
+            Rewards
+        </div>
+        @if (PondStatus == EnumWorksiteState.Collecting)
+        {
+            //this is for collecting the rewards
+            <GridTwoColumnUnlimited ColumnGap="5px" RowGap="5px">
+                @foreach (var item in _rewards)
+                {
+                    <div>
+                        @item.Item.Words
+                    </div>
+                    <div>
+                        @item.Amount
+                    </div>
+                }
+            </GridTwoColumnUnlimited>
+        }
+        else
+        {
+            <div>
+                @{
+                    var list = GetPondPreview();
+                }
+                <GridTwoColumnUnlimited ColumnGap="5px" RowGap="5px">
+                    @foreach (var item in list)
+                    {
+                        <div>
+                            @PreviewText(item)
+                        </div>
+                        <div>
+                            <ChanceRing PercentChance="item.Chance" />
+                        </div>
+                    }
+                </GridTwoColumnUnlimited>
+            </div>
+        }
+    </StackItem>
+</StackLayout>

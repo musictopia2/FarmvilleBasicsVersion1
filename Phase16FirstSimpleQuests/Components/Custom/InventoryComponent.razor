@@ -1,0 +1,13 @@
+﻿<div style="height: 200px;">
+    <div class="card-header">
+        <div class="@css1.FwBold" style="font-size: 1.5rem;">Inventory</div>
+    </div>
+    <GridTwoColumnUnlimited ColumnGap="20px">
+
+        @foreach (var item in _list)
+        {
+            <div class="@css1.FwBold">@DisplayName(item)</div>
+            <div>@item.Amount</div>
+        }
+    </GridTwoColumnUnlimited>
+</div>
