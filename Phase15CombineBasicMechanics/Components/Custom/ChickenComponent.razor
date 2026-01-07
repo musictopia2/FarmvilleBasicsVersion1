@@ -1,0 +1,59 @@
+﻿<div class="mb-3">
+    <span>Select Eggs Quantity:</span>
+    @foreach (var quantity in _quantities)
+    {
+        <button class="btn btn-sm @(quantity == _selectedQuantity ? "btn-primary" : "btn-outline-primary") me-1"
+                @onclick="() => SelectQuantity(quantity)">
+            @quantity (@state.CornRequired(quantity) Corn)
+        </button>
+    }
+</div>
+<div class="mb-3">
+    <div>
+        @FirstEggsDetails
+    </div>
+    <div class="@css1.TextDanger">
+        @SecondEggsDetails
+    </div>
+</div>
+<div class="mb-3">
+    <div>
+        <strong>Chicken State:</strong> @state.GetCowState
+    </div>
+    @if (state.GetChickenState == EnumAnimalState.Producing)
+    {
+        <div class="text-primary">@ProducingEggsText</div>
+        <div>@ReadyEggsText</div>
+    }
+    else if (state.GetChickenState == EnumAnimalState.Collecting)
+    {
+        <div class="text-success">Eggs ready to collect!</div>
+        <div>@state.EggsLeft eggs left to collect</div>
+    }
+    else
+    {
+        <div class="text-muted">Idle</div>
+    }
+</div>
+
+<div class="mb-3">
+    @if (state.GetChickenState == EnumAnimalState.None)
+    {
+        <PrimaryButton IsEnabled="@state.CanProduceEggs(_selectedQuantity)" OnClick="ProduceEggs">
+            Produce Eggs
+        </PrimaryButton>
+    }
+
+    else if (state.GetChickenState == EnumAnimalState.Collecting)
+    {
+        <SuccessButton IsEnabled="CanCollectEggs" OnClick="CollectEggs">
+            Collect 1 Egg
+        </SuccessButton>
+    }
+    else
+    {
+        <button class="btn btn-sm btn-secondary w-20" disabled>
+            Producing…
+        </button>
+    }
+</div>

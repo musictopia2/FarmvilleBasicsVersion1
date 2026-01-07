@@ -1,0 +1,32 @@
+﻿<div class="mb-3">
+    <div>
+        <strong>Tree State:</strong> @state.GetAppleState
+    </div>
+    @if (state.GetAppleState == EnumTreeState.Producing)
+    {
+        <div class="text-primary">4 Apples</div>
+        <div>@ReadyText</div>
+    }
+    else if (state.GetAppleState == EnumTreeState.Collecting)
+    {
+        <div class="text-success">
+            Apples ready to collect: @state.ApplesReady
+        </div>
+    }
+</div>
+
+<div class="mb-3">
+    @if (state.ApplesReady > 0)
+    {
+        <SuccessButton OnClick="CollectApple">
+            Collect 1 Apple
+        </SuccessButton>
+    }
+    else if (state.GetAppleState == EnumTreeState.Producing)
+    {
+        <button class="btn btn-sm btn-secondary w-20" disabled>
+            Producing…
+        </button>
+    }
+</div>
+
