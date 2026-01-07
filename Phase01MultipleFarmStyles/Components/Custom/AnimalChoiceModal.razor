@@ -1,0 +1,11 @@
+﻿<div class="mb-3">
+    <span>Select Option:</span>
+    @foreach (var option in _productionOptions)
+    {
+        <div>
+            <PrimaryButton OnClick="() => OptionSelected(option)">
+                @GetButtonText(option)
+            </PrimaryButton>
+        </div>
+    }
+</div>

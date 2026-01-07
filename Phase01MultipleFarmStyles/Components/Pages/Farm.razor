@@ -1,0 +1,14 @@
+﻿@page "/farm/{Style}"
+@if (Style == FarmStyleList.Country)
+{
+    <CountryComponent />
+    return;
+}
+@if (Style == FarmStyleList.Tropical)
+{
+    <TropicalComponent />
+    return;
+}
+<div>
+    Nothing Found
+</div>
