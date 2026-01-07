@@ -1,0 +1,32 @@
+﻿<div class="mb-3">
+    <div>
+        <strong>Tree State:</strong> @state.GetPeachState
+    </div>
+    @if (state.GetPeachState == EnumTreeState.Producing)
+    {
+        <div class="text-primary">4 Peaches</div>
+        <div>@ReadyText</div>
+    }
+    else if (state.GetPeachState == EnumTreeState.Collecting)
+    {
+        <div class="text-success">
+            Peaches ready to collect: @state.PeachesReady
+        </div>
+    }
+</div>
+
+<div class="mb-3">
+    @if (state.PeachesReady > 0)
+    {
+        <SuccessButton OnClick="CollectPeach">
+            Collect 1 Peach
+        </SuccessButton>
+    }
+    else if (state.GetPeachState == EnumTreeState.Producing)
+    {
+        <button class="btn btn-sm btn-secondary w-20" disabled>
+            Producing…
+        </button>
+    }
+</div>
+
